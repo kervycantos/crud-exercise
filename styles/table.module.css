@@ -1,0 +1,17 @@
+.borders {
+  border: 1px solid;
+}
+.px3 {
+  padding: 0 3rem;
+}
+.mx {
+  margin: 0 1rem;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.employeeTable {
+  min-width: 4rem;
+}
