@@ -5,26 +5,27 @@ import utilStyles from "../styles/utils.module.css";
 import tableStyle from "../styles/table.module.css";
 import formStyles from "../styles/form.module.css";
 import { Alert } from "@mui/material";
-import {
-  Button,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Dialog,
-} from "@mui/material";
+import Loading from "../components/loading";
+import { Button, DialogContent, DialogTitle, Dialog } from "@mui/material";
 
 function HomePage() {
   const [isLoading, setLoading] = useState(false);
-  const [birthDay, setBirthDay] = useState("");
-  const [age, setAge] = useState(null);
+
+  const [age, setAge] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [open, setOpen] = useState(false);
-  const [severity, setSeverity] = useState(null);
+  const [severity, setSeverity] = useState("");
   const [employees, setEmployees] = useState([]);
 
   const handleClickOpen = () => {
+    const bday = new Date(Date.parse("1990-01-01"));
+    const now = Date.parse(new Date().toISOString());
+
+    const diff_ms = now - bday;
+    const ageInYears = diff_ms / (1000 * 60 * 60 * 24 * 365);
+
+    setAge(Math.floor(ageInYears));
     setOpen(true);
   };
 
@@ -41,10 +42,7 @@ function HomePage() {
         console.log(employees);
         setLoading(false);
       });
-  }, [setLoading]);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (!employees) return <div>No data found</div>;
+  }, []);
 
   function calculate_age(event) {
     const bday = new Date(Date.parse(event.target.value));
@@ -58,6 +56,7 @@ function HomePage() {
 
   function handleSubmit(event) {
     event.preventDefault();
+
     setOpen(false);
     const formData = {
       firstName: firstName.value,
@@ -127,6 +126,13 @@ function HomePage() {
         });
     }
   }
+  if (isLoading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  if (!employees) return <div>No data found</div>;
   return (
     <Layout>
       <h1>Employees</h1>
@@ -184,63 +190,61 @@ function HomePage() {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">Add an Employee</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              <div className={utilStyles.flexCenter}>
-                <form
-                  onSubmit={handleSubmit}
-                  method="post"
-                  className={formStyles.form}
-                >
-                  <label htmlFor="firstName">First Name</label>
-                  <input
-                    className={formStyles.fields}
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    required
-                    minLength="2"
-                    maxLength="10"
-                    placeholder="2-10 char"
-                  />
-                  <label htmlFor="lastName">Last Name</label>
-                  <input
-                    className={formStyles.fields}
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    required
-                    minLength="2"
-                    maxLength="10"
-                    placeholder="2-10 char"
-                  />
-                  <label htmlFor="birthDay">Birth Day</label>
-                  <input
-                    type="date"
-                    className={formStyles.fields}
-                    name="bDate"
-                    id="bDate"
-                    required
-                    defaultValue="1990-07-22"
-                    min="1923-01-01"
-                    max="2005-01-01"
-                    onChange={calculate_age}
-                  />
-                  <label htmlFor="age">Age</label>
-                  <input
-                    name="newAge"
-                    id="newAge"
-                    type="number"
-                    readOnly
-                    value={age}
-                    className={formStyles.fields}
-                  />
-                  <Button type="submit">Submit</Button>
-                  <Button onClick={handleClose}>Close</Button>
-                </form>
-              </div>
-            </DialogContentText>
-          </DialogContent>
+          <div className={utilStyles.flexCenter}>
+            <DialogContent>
+              <form
+                onSubmit={handleSubmit}
+                method="post"
+                className={formStyles.form}
+              >
+                <label htmlFor="firstName">First Name</label>
+                <input
+                  className={formStyles.fields}
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  required
+                  minLength="2"
+                  maxLength="10"
+                  placeholder="2-10 char"
+                />
+                <label htmlFor="lastName">Last Name</label>
+                <input
+                  className={formStyles.fields}
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  required
+                  minLength="2"
+                  maxLength="10"
+                  placeholder="2-10 char"
+                />
+                <label htmlFor="birthDay">Birth Day</label>
+                <input
+                  type="date"
+                  className={formStyles.fields}
+                  name="bDate"
+                  id="bDate"
+                  required
+                  defaultValue="1990-01-01"
+                  min="1923-01-01"
+                  max="2005-01-01"
+                  onChange={calculate_age}
+                />
+                <label htmlFor="age">Age</label>
+                <input
+                  name="newAge"
+                  id="newAge"
+                  type="number"
+                  readOnly
+                  value={age}
+                  className={formStyles.fields}
+                />
+                <Button onClick={handleClose}>Close</Button>
+                <Button type="submit">Submit</Button>
+              </form>
+            </DialogContent>
+          </div>
         </Dialog>
       </div>
       {showAlert && (

@@ -4,16 +4,17 @@ import { useRouter } from "next/router";
 import formStyles from "../styles/form.module.css";
 import utilStyles from "../styles/utils.module.css";
 import { Alert } from "@mui/material";
+import Loading from "../components/loading";
 import Link from "next/link";
 
 function editEmployee() {
   const [data, setData] = useState(null);
-  const [birthDay, setBirthDay] = useState(null);
+  const [birthDay, setBirthDay] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [age, setAge] = useState(null);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [severity, setSeverity] = useState(null);
+  const [severity, setSeverity] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -60,7 +61,12 @@ function editEmployee() {
     return <div>...Loading</div>;
   }
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <Loading />.
+      </div>
+    );
   if (!data) return <div>Failed to load</div>;
 
   function calculate_age(event) {
