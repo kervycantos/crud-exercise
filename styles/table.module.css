@@ -13,5 +13,14 @@
   margin-right: auto;
 }
 .employeeTable {
-  min-width: 4rem;
+  margin-top: 20px;
+  min-width: 5rem;
+}
+.employeeTable th,
+.employeeTable td {
+  min-width: 200px;
+  text-align: center;
+}
+.employeeTable td:not(:last-child):hover {
+  background-color: antiquewhite;
 }

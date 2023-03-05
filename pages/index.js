@@ -165,18 +165,21 @@ function HomePage() {
                 {employee.age}
               </td>
               <td className={tableStyle.borders}>
-                <button>
-                  <Link className={tableStyle.mx} href={`/${employee._id}`}>
+                <Link className={tableStyle.mx} href={`/${employee._id}`}>
+                  <Button variant="contained" color="warning">
+                    {" "}
                     EDIT
-                  </Link>
-                </button>
-                <button
+                  </Button>
+                </Link>
+                <Button
+                  variant="contained"
+                  color="error"
                   onClick={() => {
                     handleDelete(employee._id);
                   }}
                 >
-                  Delete
-                </button>
+                  DELETE
+                </Button>
               </td>
             </tr>
           ))}
