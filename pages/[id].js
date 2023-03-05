@@ -46,7 +46,7 @@ function editEmployee() {
         };
 
         setBirthDay(
-          bdate.toLocaleString("en-PH", options).split("/").join("-")
+          bdate.toLocaleString("en-PH", options).split("/").reverse().join("-")
         );
         console.log(birthDay);
         setLoading(false);
