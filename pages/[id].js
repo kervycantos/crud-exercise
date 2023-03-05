@@ -15,6 +15,7 @@ function editEmployee() {
   const [showAlert, setShowAlert] = useState(false);
   const [severity, setSeverity] = useState(null);
   const router = useRouter();
+
   useEffect(() => {
     if (!router.isReady) return;
     const { id } = router.query;
