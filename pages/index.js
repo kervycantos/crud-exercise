@@ -43,8 +43,8 @@ function HomePage() {
       });
   }, [setLoading]);
 
-  if (isLoading) return <div>Failed to load</div>;
-  if (!employees) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (!employees) return <div>No data found</div>;
 
   function calculate_age(event) {
     const bday = new Date(Date.parse(event.target.value));
